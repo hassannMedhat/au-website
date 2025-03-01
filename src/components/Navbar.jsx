@@ -1,24 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { AuthContext } from "../context/AuthContext";
 
 export default function Navbar() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const router = useRouter();
-
-  useEffect(() => {
-    const token = Cookies.get("token");
-    setIsLoggedIn(!!token);
-  }, []);
-
-  const handleLogout = () => {
-    Cookies.remove("token");
-    setIsLoggedIn(false);
-    router.push("/login");
-  };
+  const { isLoggedIn } = useContext(AuthContext);
+  const pathname = usePathname();
 
   return (
     <motion.nav
@@ -27,46 +16,45 @@ export default function Navbar() {
       transition={{ duration: 0.5, ease: "easeOut" }}
       className="relative shadow-md"
     >
-      {/* الخلفية GIF */}
+      {/* GIF */}
       <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/au.gif')" }}
+        className="absolute inset-0 bg-cover bg-center h-20"
+        style={{ backgroundImage: "url('/images/auLine.gif')" }}
       ></div>
 
-      {/* المحتوى فوق الـ GIF */}
-      <div className="relative z-10 flex items-center p-4 text-white justify-end gap-4 pr-4">
+      {/* links */}
+      <div className="relative z-10 flex items-center justify-end gap-6 pr-10 h-20">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex gap-4"
+          className="flex gap-6 text-base font-medium text-white relative"
         >
-          <Link href="/" className="hover:text-gray-300 transition duration-300">
-            Home
-          </Link>
-          <Link href="/creators" className="hover:text-gray-300 transition duration-300">
-            Creators
-          </Link>
-          <Link href="/jobs" className="hover:text-gray-300 transition duration-300">
-            Jobs
-          </Link>
-          {!isLoggedIn ? (
-            <>
-              <Link href="/login" className="hover:text-blue-400 transition duration-300">
-                Login
-              </Link>
-              <Link href="/register" className="hover:text-green-400 transition duration-300">
-                Register
-              </Link>
-            </>
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded hover:bg-red-700 transition duration-300"
-            >
-              Logout
-            </button>
-          )}
+          {[
+            { name: "Home", path: "/" },
+            { name: "Rules", path: "/rules" },
+            { name: "Creators", path: "/creators" },
+            { name: "Jobs", path: "/jobs" },
+            !isLoggedIn && { name: "Login", path: "/login" },
+            !isLoggedIn && { name: "Register", path: "/register" },
+          ]
+            .filter(Boolean)
+            .map(({ name, path }) => (
+              <div key={path} className="relative">
+                <Link href={path} className="hover:text-gray-300 transition duration-300">
+                  {name}
+                </Link>
+                {pathname === path && (
+                  <motion.div
+                    layoutId="underline"
+                    className="absolute left-0 bottom-[-4px] w-full h-1 bg-blue-400"
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 0.3 }}
+                  ></motion.div>
+                )}
+              </div>
+            ))}
         </motion.div>
       </div>
     </motion.nav>
