@@ -2,7 +2,6 @@
 import { useState, useContext, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 import Cookies from "js-cookie";
 import { AuthContext } from "../../context/AuthContext";
 import Image from "next/image";
@@ -27,10 +26,12 @@ export default function LoginPage() {
     setError("");
     setLoading(true);
 
+    
+
     try {
       const res = await axios.post(
         "http://127.0.0.1:8000/api/login",
-        { email, password },
+        { email, password},
         {
           headers: {
             "Content-Type": "application/json",
@@ -39,52 +40,33 @@ export default function LoginPage() {
         }
       );
 
-      console.log("Login response:", res);
-
       if (!res.data || !res.data.token || !res.data.user) {
         throw new Error("Invalid response from server");
       }
 
       setIsLoggedIn(true);
-
       Cookies.set("token", res.data.token, {
         expires: 7,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Strict",
       });
-
       localStorage.setItem("user", JSON.stringify(res.data.user));
-
       router.push("/");
     } catch (error) {
       setLoading(false);
-      console.error("Full Error:", error);
-
-      if (error.response) {
-        const { status, data } = error.response;
-
-        if (status === 401) {
-          if (data?.error?.toLowerCase().includes("password")) {
-            setError("⚠️ Incorrect password. Please try again.");
-          } else {
-            setError("⚠️ This email is not registered. Please sign up first.");
-          }
-        } else if (status === 404) {
-          setError("⚠️ This email is not registered. Please sign up first.");
-        } else {
-          setError(
-            data?.error || "⚠️ Authentication failed. Please try again later."
-          );
-        }
-      } else if (error.request) {
-        setError(
-          "⚠️ Unable to connect to the server. Please check your connection."
-        );
-      } else {
-        setError("⚠️ An unexpected error occurred. Please try again.");
-      }
+      setError(error.response?.data?.error || "Authentication failed!");
     }
   };
+
+  const handleDiscordLogin = () => {
+    window.location.href = "http://127.0.0.1:8000/api/auth/discord";
+  };
+
+  const handleGoogleLogin = () => {
+    window.location.href = "http://127.0.0.1:8000/api/auth/google";
+  };
+
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-gray-900 to-blue-900 p-4 sm:p-6 lg:p-8">
@@ -97,17 +79,14 @@ export default function LoginPage() {
 
       <div className="relative z-10 w-full max-w-3xl rounded-2xl p-8 border border-blue-500/20 shadow-xl">
         <div className="flex flex-col items-center mb-6">
-          <div className="mb-5">
-            <Image
-              src="/images/au.png"
-              alt="Arab Universe Logo"
-              width={140}
-              height={140}
-              className="object-contain"
-              loading="lazy"
-              onError={() => console.log("Error loading logo")}
-            />
-          </div>
+          <Image
+            src="/images/au.png"
+            alt="Arab Universe Logo"
+            width={140}
+            height={140}
+            className="object-contain mb-5"
+            loading="lazy"
+          />
           <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-500 tracking-wide">
             ARAB UNIVERSE
           </h1>
@@ -118,7 +97,7 @@ export default function LoginPage() {
 
         <form onSubmit={handleSubmit} className="space-y-5">
           {error && (
-            <div className="text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-lg text-center font-medium animate-fade-in">
+            <div className="text-red-400 bg-red-500/10 border border-red-500/20 p-3 rounded-lg text-center font-medium">
               ⚠️ {error}
             </div>
           )}
@@ -135,7 +114,6 @@ export default function LoginPage() {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-5 py-4 bg-gray-900 border border-blue-500/20 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30 transition-all duration-200 hover:border-blue-500/40 text-base"
               required
-              autoComplete="email"
             />
           </div>
 
@@ -151,18 +129,33 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-5 py-4 bg-gray-900 border border-blue-500/20 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30 transition-all duration-200 hover:border-blue-500/40 text-base"
               required
-              autoComplete="current-password"
             />
           </div>
+
+          
 
           <button
             type="submit"
             disabled={loading}
             className="w-full py-4 px-6 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-lg font-semibold text-lg text-white hover:from-blue-400 hover:to-cyan-500 transition-all duration-200 hover:shadow-md active:scale-98 disabled:bg-gray-600 disabled:cursor-not-allowed"
           >
-            <span className="relative">
-              {loading ? "Logging in..." : "Login"}
-            </span>
+            {loading ? "Logging in..." : "Login"}
+          </button>
+
+          <button
+            type="button"
+            onClick={handleDiscordLogin}
+            className="w-full py-4 px-6 bg-blue-600 text-white rounded-lg font-semibold text-lg hover:bg-blue-500 transition-all duration-200"
+          >
+            Login with Discord
+          </button>
+
+          <button
+            type="button"
+            onClick={handleGoogleLogin}
+            className="w-full py-4 px-6 bg-red-600 text-white rounded-lg font-semibold text-lg hover:bg-red-500 transition-all duration-200"
+          >
+            Login with Google
           </button>
         </form>
       </div>

@@ -11,10 +11,7 @@ export default function RootLayout({ children }) {
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // Define routes where Navbar and Footer should be hidden
   const hideNavFooter = ["/login", "/register", "/forgot-password", "/reset-password"].includes(pathname);
-
-  // Check if the current route is under the dashboard
   const isDashboard = pathname.startsWith("/dashboard");
 
   return (
@@ -26,17 +23,14 @@ export default function RootLayout({ children }) {
       <body
         className={
           isDashboard
-            ? "bg-gray-900 text-white min-h-screen flex" // استخدام flex لتوسيع المحتوى
+            ? "bg-gray-900 text-white min-h-screen flex w-full p-0 m-0"
             : hideNavFooter
-            ? "bg-gradient-to-br from-black via-gray-900 to-blue-900 text-white min-h-screen"
-            : "bg-gray-100 text-gray-900 min-h-screen"
+            ? "bg-gradient-to-br from-black via-gray-900 to-blue-900 text-white min-h-screen flex items-center justify-center w-full p-0 m-0"
+            : "bg-gray-100 text-gray-900 w-full p-0 m-0"
         }
       >
         <AuthProvider>
-          {/* إخفاء الـ Navbar في الصفحات المحددة أو الـ Dashboard */}
           {!hideNavFooter && !isDashboard && <Navbar />}
-
-          {/* زر فتح/إغلاق الـ Sidebar للشاشات الصغيرة */}
           {isDashboard && (
             <button
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
@@ -58,15 +52,12 @@ export default function RootLayout({ children }) {
               </svg>
             </button>
           )}
-
-          {/* إضافة الـ Sidebar في الـ Dashboard */}
           {isDashboard && (
             <div
               className={`fixed inset-y-0 left-0 w-64 bg-gray-800 shadow-lg p-4 flex flex-col space-y-4 transform transition-transform duration-300 ease-in-out ${
                 isSidebarOpen ? "translate-x-0" : "-translate-x-full"
               } md:translate-x-0 md:relative`}
             >
-              {/* Logo */}
               <div className="flex items-center space-x-3">
                 <img
                   src="/images/aured.png"
@@ -77,8 +68,6 @@ export default function RootLayout({ children }) {
                   Arab Universe
                 </h2>
               </div>
-
-              {/* Navigation */}
               <nav className="flex flex-col space-y-2">
                 <a
                   href="/"
@@ -129,21 +118,17 @@ export default function RootLayout({ children }) {
               </nav>
             </div>
           )}
-
-          {/* المحتوى الرئيسي */}
           <main
             className={
               isDashboard
-                ? "flex-1 p-4 overflow-y-auto" // توسيع المحتوى لملء المساحة المتبقية
+                ? "flex-1 p-4 overflow-y-auto w-full"
                 : hideNavFooter
-                ? "min-h-screen flex items-center justify-center"
-                : "container mx-auto p-4"
+                ? "min-h-screen flex items-center justify-center w-full"
+                : "w-full p-0"
             }
           >
             {children}
           </main>
-
-          {/* إخفاء الـ Footer في الصفحات المحددة أو الـ Dashboard */}
           {!hideNavFooter && !isDashboard && <Footer />}
         </AuthProvider>
       </body>
