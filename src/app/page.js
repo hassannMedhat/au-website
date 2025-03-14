@@ -50,13 +50,14 @@ const HeroSection = () => {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* خلفية الفيديو */}
       <video
+        
         ref={videoRef}
         autoPlay
         loop
         muted={isMuted}
         className="absolute w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
       >
-        <source src="videos/intro1.mp4" type="video/mp4" />
+        <source src="https://res.cloudinary.com/diwavsksm/video/upload/v1741962956/intro_poyq5n.mp4" type="video/mp4" />
         متصفحك لا يدعم الفيديو.
       </video>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
@@ -224,12 +225,13 @@ const StatsTracker = () => {
 };
 
 // Media Gallery Section
+
 const MediaGallery = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 200,
-    slidesToShow: 1,
+    speed: 300,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay: true,
     centerMode: true,
@@ -258,30 +260,28 @@ const MediaGallery = () => {
     ],
   };
 
+  const images = [
+    "/images/mustang.png",
+    "/images/gt3.png",
+    "/images/supra.png",
+    "/images/bmw2.png",
+    "/images/gclass.png",
+    "/images/bmw.png",
+  ];
+
   return (
     <section className="py-16 bg-black text-white">
       <h3 className="text-center text-3xl sm:text-4xl md:text-5xl font-extrabold mb-12 animate-pulse text-gray-400">
         Epic Moments
       </h3>
       <Slider {...settings} className="max-w-6xl mx-auto px-4">
-        {["video1.mp4", "screenshot1.jpg", "video2.mp4"].map((media, index) => (
+        {images.map((image, index) => (
           <div key={index} className="px-2">
-            {media.endsWith(".mp4") ? (
-              <video
-                autoPlay
-                muted
-                loop
-                className="w-full rounded-lg shadow-2xl transform hover:scale-105"
-              >
-                <source src={`videos/testvid.mp4`} type="video/mp4" />
-              </video>
-            ) : (
-              <img
-                src={`path/images`}
-                alt="Scene"
-                className="w-full rounded-lg shadow-2xl transform hover:scale-105"
-              />
-            )}
+            <img
+              src={image}
+              alt={`Scene ${index + 1}`}
+              className="w-full rounded-lg shadow-2xl transform hover:scale-105"
+            />
           </div>
         ))}
       </Slider>
