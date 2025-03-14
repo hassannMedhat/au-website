@@ -9,134 +9,134 @@ import { useRef } from "react";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 
 // Hero Section
-// const HeroSection = () => {
-//   const videoRef = useRef(null);
-//   const [isMuted, setIsMuted] = useState(true);
-//   const [progress, setProgress] = useState(0);
-//   const [currentSeconds, setCurrentSeconds] = useState(0);
-//   const [showCard, setShowCard] = useState(false);
+const HeroSection = () => {
+  const videoRef = useRef(null);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [currentSeconds, setCurrentSeconds] = useState(0);
+  const [showCard, setShowCard] = useState(false);
 
-//   useEffect(() => {
-//     const video = videoRef.current;
-//     if (video) {
-//       video.play().catch((error) => {
-//         console.log("خطأ في تشغيل الفيديو:", error);
-//       });
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch((error) => {
+        console.log("خطأ في تشغيل الفيديو:", error);
+      });
 
-//       const handleTimeUpdate = () => {
-//         if (video.currentTime >= 60) {
-//           video.currentTime = 0;
-//         }
-//         setCurrentSeconds(video.currentTime);
-//         setProgress(video.currentTime / 60);
-//       };
+      const handleTimeUpdate = () => {
+        if (video.currentTime >= 60) {
+          video.currentTime = 0;
+        }
+        setCurrentSeconds(video.currentTime);
+        setProgress(video.currentTime / 60);
+      };
 
-//       video.addEventListener("timeupdate", handleTimeUpdate);
-//       return () => {
-//         video.removeEventListener("timeupdate", handleTimeUpdate);
-//       };
-//     }
-//   }, []);
+      video.addEventListener("timeupdate", handleTimeUpdate);
+      return () => {
+        video.removeEventListener("timeupdate", handleTimeUpdate);
+      };
+    }
+  }, []);
 
-//   const toggleMute = () => {
-//     const video = videoRef.current;
-//     if (video) {
-//       video.muted = !video.muted;
-//       setIsMuted(video.muted);
-//     }
-//   };
+  const toggleMute = () => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = !video.muted;
+      setIsMuted(video.muted);
+    }
+  };
 
-//   return (
-//     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-//       {/* خلفية الفيديو */}
-//       <video
-//         ref={videoRef}
-//         autoPlay
-//         loop
-//         muted={isMuted}
-//         className="absolute w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
-//       >
-//         <source src="videos/intro1.mp4" type="video/mp4" />
-//         متصفحك لا يدعم الفيديو.
-//       </video>
-//       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
+  return (
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* خلفية الفيديو */}
+      <video
+        ref={videoRef}
+        autoPlay
+        loop
+        muted={isMuted}
+        className="absolute w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
+      >
+        <source src="videos/intro1.mp4" type="video/mp4" />
+        متصفحك لا يدعم الفيديو.
+      </video>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
 
-//       {/* ✅ زرار فتح الكارد */}
-//       <button
-//         onClick={() => setShowCard(!showCard)}
-//         className="absolute top-5 left-5 md:top-10 md:left-10 p-3 md:p-4 bg-white/30 backdrop-blur-lg shadow-md rounded-full border border-white border-opacity-30 text-white hover:bg-white/40 transition-all"
-//       >
-//         {showCard ? "✖" : "🎵"}
-//       </button>
+      {/* ✅ زرار فتح الكارد */}
+      <button
+        onClick={() => setShowCard(!showCard)}
+        className="absolute top-5 left-5 md:top-10 md:left-10 p-3 md:p-4 bg-white/30 backdrop-blur-lg shadow-md rounded-full border border-white border-opacity-30 text-white hover:bg-white/40 transition-all"
+      >
+        {showCard ? "✖" : "🎵"}
+      </button>
 
-//       {/* ✅ كارد الصوت المتحرك */}
-//       <div
-//         className={`absolute top-16 left-5 md:top-20 md:left-10 p-4 md:p-6 rounded-xl bg-white/20 backdrop-blur-lg shadow-lg border border-white border-opacity-20 flex flex-col items-center space-y-3 w-44 md:w-56 transition-all duration-500 ease-in-out ${
-//           showCard
-//             ? "opacity-100 translate-y-0"
-//             : "opacity-0 -translate-y-10 pointer-events-none"
-//         }`}
-//       >
-//         {/* صورة الأغنية */}
-//         <img
-//           src="https://img.youtube.com/vi/5mWkn0Xb6KM/0.jpg"
-//           alt="Song Cover"
-//           className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-lg shadow-md transition-transform hover:scale-105"
-//         />
-//         <h3 className="text-sm md:text-base font-bold text-white text-center drop-shadow-lg">
-//           Madison Beer - Reckless
-//         </h3>
+      {/* ✅ كارد الصوت المتحرك */}
+      <div
+        className={`absolute top-16 left-5 md:top-20 md:left-10 p-4 md:p-6 rounded-xl bg-white/20 backdrop-blur-lg shadow-lg border border-white border-opacity-20 flex flex-col items-center space-y-3 w-44 md:w-56 transition-all duration-500 ease-in-out ${
+          showCard
+            ? "opacity-100 translate-y-0"
+            : "opacity-0 -translate-y-10 pointer-events-none"
+        }`}
+      >
+        {/* صورة الأغنية */}
+        <img
+          src="https://img.youtube.com/vi/5mWkn0Xb6KM/0.jpg"
+          alt="Song Cover"
+          className="w-20 h-20 md:w-24 md:h-24 object-cover rounded-lg shadow-md transition-transform hover:scale-105"
+        />
+        <h3 className="text-sm md:text-base font-bold text-white text-center drop-shadow-lg">
+          Madison Beer - Reckless
+        </h3>
 
-//         {/* ✅ شريط التقدم */}
-//         <div className="w-full bg-gray-300 rounded-full h-2 md:h-3 overflow-hidden">
-//           <div
-//             className="h-full bg-gradient-to-r from-red-500 to-yellow-500 transition-all duration-500"
-//             style={{ width: `${progress * 100}%` }}
-//           ></div>
-//         </div>
+        {/* ✅ شريط التقدم */}
+        <div className="w-full bg-gray-300 rounded-full h-2 md:h-3 overflow-hidden">
+          <div
+            className="h-full bg-gradient-to-r from-red-500 to-yellow-500 transition-all duration-500"
+            style={{ width: `${progress * 100}%` }}
+          ></div>
+        </div>
 
-//         {/* الوقت الحالي */}
-//         <div className="text-xs md:text-sm text-white font-mono">
-//           {Math.floor(currentSeconds)}s / 60s
-//         </div>
+        {/* الوقت الحالي */}
+        <div className="text-xs md:text-sm text-white font-mono">
+          {Math.floor(currentSeconds)}s / 60s
+        </div>
 
-//         {/* ✅ زر الميوت */}
-//         <button
-//           onClick={toggleMute}
-//           className="mt-1 flex items-center justify-center space-x-2 px-3 py-2 md:px-4 md:py-2.5 bg-gray-900 bg-opacity-80 text-white rounded-full shadow-md hover:bg-opacity-90 transition-all"
-//         >
-//           {isMuted ? <FaVolumeMute size={16} /> : <FaVolumeUp size={16} />}
-//           <span className="text-xs md:text-sm">
-//             {isMuted ? "Muted" : "Unmute"}
-//           </span>
-//         </button>
-//       </div>
+        {/* ✅ زر الميوت */}
+        <button
+          onClick={toggleMute}
+          className="mt-1 flex items-center justify-center space-x-2 px-3 py-2 md:px-4 md:py-2.5 bg-gray-900 bg-opacity-80 text-white rounded-full shadow-md hover:bg-opacity-90 transition-all"
+        >
+          {isMuted ? <FaVolumeMute size={16} /> : <FaVolumeUp size={16} />}
+          <span className="text-xs md:text-sm">
+            {isMuted ? "Muted" : "Unmute"}
+          </span>
+        </button>
+      </div>
 
-//       {/* ✅ المحتوى الرئيسي */}
-//       <div
-//         className={`relative z-20 text-center text-white px-4 transition-all duration-500 ${
-//           showCard ? "mt-40" : "mt-0"
-//         }`}
-//       >
-//         <h2
-//           className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-5 md:mb-6"
-//           style={{ textShadow: "0 0 10px rgba(255, 255, 255, 0.8)" }}
-//         >
-//           Welcome to Arab Universe
-//         </h2>
-//         <p className="text-base sm:text-lg md:text-2xl mb-6 md:mb-10">
-//           Live the Ultimate RP Adventure
-//         </p>
-//         <button
-//           onClick={() => new Audio("path/to/rev-engine.mp3").play()}
-//           className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8 rounded-full transform transition-all hover:scale-110 shadow-lg md:shadow-2xl animate-pulse"
-//         >
-//           Join the Action
-//         </button>
-//       </div>
-//     </section>
-//   );
-// };
+      {/* ✅ المحتوى الرئيسي */}
+      <div
+        className={`relative z-20 text-center text-white px-4 transition-all duration-500 ${
+          showCard ? "mt-40" : "mt-0"
+        }`}
+      >
+        <h2
+          className="text-4xl sm:text-5xl md:text-7xl font-extrabold mb-5 md:mb-6"
+          style={{ textShadow: "0 0 10px rgba(255, 255, 255, 0.8)" }}
+        >
+          Welcome to Arab Universe
+        </h2>
+        <p className="text-base sm:text-lg md:text-2xl mb-6 md:mb-10">
+          Live the Ultimate RP Adventure
+        </p>
+        <button
+          onClick={() => new Audio("path/to/rev-engine.mp3").play()}
+          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8 rounded-full transform transition-all hover:scale-110 shadow-lg md:shadow-2xl animate-pulse"
+        >
+          Join the Action
+        </button>
+      </div>
+    </section>
+  );
+};
 
 // StatBox Component for Stats Tracker
 const StatBox = ({ value, label }) => {
@@ -323,7 +323,7 @@ const Leaderboard = () => (
 export default function HomePage() {
   return (
     <div className="flex flex-col">
-      {/* <HeroSection /> */}
+      <HeroSection />
       <StatsTracker />
       <MediaGallery />
       <Leaderboard />
