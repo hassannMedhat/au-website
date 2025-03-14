@@ -55,9 +55,10 @@ const HeroSection = () => {
         autoPlay
         loop
         muted={isMuted}
+        preload="metadata"
         className="absolute w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
       >
-        <source src="https://res.cloudinary.com/diwavsksm/video/upload/v1741962956/intro_poyq5n.mp4" type="video/mp4" />
+        <source src="https://res.cloudinary.com/diwavsksm/video/upload/f_auto,q_auto/v1741962956/intro_poyq5n.mp4" type="video/mp4" />
         متصفحك لا يدعم الفيديو.
       </video>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
