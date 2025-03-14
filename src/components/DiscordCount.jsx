@@ -1,20 +1,30 @@
 "use client";
-// Discord Count Component
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 export default function DiscordCount() {
-  const [count, setCount] = useState(0);
-
+  const [count, setCount] = useState('0');
+  
   useEffect(() => {
-    axios.get("/api/discord")
-      .then((res) => setCount(res.data.member_count))
-      .catch((err) => console.error(err));
+    const fetchData = async () => {
+      try {
+        const { data } = await axios.get('/api/discord');
+        setCount(data.member_count || '0');
+      } catch (err) {
+        console.error('Error:', err);
+        setCount('???'); // عرض علامة استفهام إذا حدث خطأ
+      }
+    };
+
+    fetchData();
+    const interval = setInterval(fetchData, 300000); // تحديث كل 5 دقائق
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="discord-count">
-      <p>Discord Members: {count}</p>
+    <div className="text-center">
+      <div className="text-4xl font-bold animate-pulse">{count}</div>
+      <div className="mt-2 text-sm opacity-75">Discord Members</div>
     </div>
   );
 }

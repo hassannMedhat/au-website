@@ -1,10 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
-import { FiChevronLeft } from 'react-icons/fi';
+import { FiChevronLeft, FiShield, FiAlertTriangle, FiUsers } from 'react-icons/fi';
+import { motion } from 'framer-motion';
 
 const rulesData = [
   {
     title: "Criminal Rules",
+    icon: <FiAlertTriangle className="text-red-500" />,
     topics: [
       "General Criminal Rules",
       "Robberies Rules",
@@ -17,6 +19,7 @@ const rulesData = [
   },
   {
     title: "Gang rules",
+    icon: <FiUsers className="text-blue-500" />,
     topics: [
       "General Gang Rules",
       "Pickpocket Rules",
@@ -25,6 +28,7 @@ const rulesData = [
   },
   {
     title: "Crucial rules",
+    icon: <FiShield className="text-yellow-500" />,
     topics: [
       "PERMA BAN"
     ]
@@ -190,70 +194,86 @@ export default function RulesPage() {
   }, [selectedTopic]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 p-4 sm:p-6 lg:p-8">
       <div className="max-w-screen-lg mx-auto">
-        <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">
-          Server Rules
+        <h1 className="text-5xl font-extrabold mb-10 text-center text-yellow-300 drop-shadow-lg">
+          📜 Server Rules 📜
         </h1>
 
         <div className="space-y-6">
           {rulesData.map((section, index) => (
-            <div
+            <motion.div
               key={index}
-              className="bg-white rounded-xl shadow-lg overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="bg-gray-800 rounded-xl shadow-2xl overflow-hidden"
             >
               <div
                 className={`p-5 cursor-pointer transition-colors ${
                   expandedTitleIndex === index
-                    ? 'bg-blue-50'
-                    : 'bg-white hover:bg-gray-50'
+                    ? 'bg-blue-700'
+                    : 'bg-gray-700 hover:bg-gray-600'
                 }`}
                 onClick={() => handleTitleClick(index)}
               >
-                <h2 className="text-xl font-semibold flex justify-between items-center text-gray-700">
-                  {section.title}
+                <h2 className="text-2xl font-bold flex items-center text-white">
+                  {section.icon}
+                  <span className="ml-3">{section.title}</span>
                   <FiChevronLeft
-                    className={`transform transition-transform ${
+                    className={`ml-auto transform transition-transform ${
                       expandedTitleIndex === index ? 'rotate-90' : '-rotate-90'
-                    } text-gray-500`}
+                    } text-yellow-300`}
                   />
                 </h2>
               </div>
 
               {expandedTitleIndex === index && (
-                <div className="border-t p-5 bg-gray-50">
+                <div className="border-t border-gray-600 p-5 bg-gray-900">
                   {section.topics.map((topic, topicIndex) => (
                     <div
                       key={topicIndex}
-                      className={`p-3 mb-2 rounded-lg cursor-pointer transition-colors ${
+                      className={`p-4 mb-3 rounded-lg cursor-pointer transition-all ${
                         selectedTopic === topic
-                          ? 'bg-blue-100 border-l-4 border-blue-500'
-                          : 'bg-white hover:bg-gray-100'
+                          ? 'bg-blue-600 border-l-4 border-yellow-300'
+                          : 'bg-gray-800 hover:bg-gray-700'
                       }`}
                       onClick={() => handleTopicClick(topic)}
                     >
-                      <p className="text-gray-700">{topic}</p>
+                      <p className="text-white font-medium">{topic}</p>
                     </div>
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {selectedTopic && (
-          <div
+          <motion.div
             ref={contentRef}
-            className="mt-8 bg-white rounded-xl shadow-lg p-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mt-10 bg-gray-800 rounded-xl shadow-2xl p-8"
           >
-            <h3 className="text-2xl font-bold mb-4 text-gray-800">
+            <h3 className="text-3xl font-bold mb-6 text-yellow-300">
               {selectedTopic}
             </h3>
-            <div className="space-y-4 text-gray-700">
+            <div className="space-y-4 text-gray-200 leading-relaxed">
               {rulesContent[selectedTopic]}
             </div>
-          </div>
+          </motion.div>
         )}
+
+        <div className="mt-12 text-center">
+          <button
+            className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-full transform transition-all hover:scale-105 shadow-lg"
+            onClick={() => alert("شكرًا لقراءتك القوانين!")}
+          >
+            اقرأت القوانين؟
+          </button>
+        </div>
       </div>
     </div>
   );
