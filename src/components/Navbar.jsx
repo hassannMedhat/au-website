@@ -1,11 +1,21 @@
 "use client";
 import Cookies from "js-cookie";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { motion, useAnimation } from "framer-motion";
 
+// Wrap the Navbar component in Suspense
 export default function Navbar() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NavbarContent />
+    </Suspense>
+  );
+}
+
+// Move the main logic to a separate component
+function NavbarContent() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
