@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { useRef } from "react";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import Cookies from "js-cookie";
+import Image from "next/image";
 
 // Hero Section
 const HeroSection = () => {
@@ -45,6 +46,16 @@ const HeroSection = () => {
       video.muted = !video.muted;
       setIsMuted(video.muted);
     }
+  };
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleButtonClick = () => {
+    new Audio("path/to/rev-engine.mp3").play(); // تشغيل الصوت
+    setIsPopupOpen(true); // فتح الـ pop-up
+  };
+
+  const closePopup = () => {
+    setIsPopupOpen(false); // إغلاق الـ pop-up
   };
 
   return (
@@ -135,12 +146,74 @@ const HeroSection = () => {
         <p className="text-base sm:text-lg md:text-2xl mb-6 md:mb-10">
           Live the Ultimate RP Adventure
         </p>
-        <button
-          onClick={() => new Audio("path/to/rev-engine.mp3").play()}
-          className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8 rounded-full transform transition-all hover:scale-110 shadow-lg md:shadow-2xl animate-pulse"
-        >
-          Join the Action
-        </button>
+        <div className="min-h-screen flex items-center justify-center ">
+          {/* الزر الرئيسي */}
+          <button
+            onClick={handleButtonClick}
+            className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 sm:py-3 sm:px-6 md:py-4 md:px-8 rounded-full transform transition-all hover:scale-110 shadow-lg md:shadow-2xl animate-pulse"
+          >
+            Join the Action
+          </button>
+
+          {/* الـ Pop-up */}
+          {isPopupOpen && (
+            <div
+              className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+              onClick={closePopup} // إغلاق الـ pop-up عند الضغط خارج النافذة
+            >
+              <div
+                className="bg-gray-800 rounded-lg p-8 max-w-md w-full relative border border-blue-500/20 shadow-2xl"
+                onClick={(e) => e.stopPropagation()} // منع إغلاق الـ pop-up عند الضغط داخله
+              >
+                {/* زر الإغلاق (X) */}
+                <button
+                  onClick={closePopup}
+                  className="absolute top-4 right-4 text-[#035ea3] hover:text-[#0284c7] transition-colors"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+
+                {/* اللوجو */}
+                <div className="flex justify-center mb-6">
+                  <Image
+                    src="/images/au.png" // مسار اللوجو الخاص بك
+                    alt="Arab Universe Logo"
+                    width={100}
+                    height={100}
+                    className="object-contain"
+                  />
+                </div>
+
+                {/* التعليمات */}
+                <div className="space-y-4 text-center">
+                  <p className="text-gray-300 text-lg">1- Open FiveM</p>
+                  <p className="text-gray-300 text-lg">2- Press F8</p>
+                  <p className="text-gray-300 text-lg">3- Copy this</p>
+                  <p className="text-blue-400 font-mono bg-gray-700 p-2 rounded">
+                    connect 91.212.121.248
+                  </p>
+                  <p className="text-gray-300 text-lg">4- Press Enter</p>
+                  <p className="text-gray-300 text-lg mt-4">
+                    Welcome to ARAB UNIVERSE
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
