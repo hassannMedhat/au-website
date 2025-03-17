@@ -7,6 +7,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRef } from "react";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
+import Cookies from "js-cookie";
 
 // Hero Section
 const HeroSection = () => {
@@ -49,18 +50,22 @@ const HeroSection = () => {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* خلفية الفيديو */}
-      <video
-        
-        ref={videoRef}
-        autoPlay
-        loop
-        muted={isMuted}
-        preload="metadata"
-        className="absolute w-full h-full object-cover transform transition-transform duration-500 hover:scale-110"
-      >
-        <source src="https://res.cloudinary.com/diwavsksm/video/upload/f_auto,q_auto/v1741962956/intro_poyq5n.mp4" type="video/mp4" />
-        متصفحك لا يدعم الفيديو.
-      </video>
+      <div className="absolute inset-0 w-full h-full">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted={isMuted}
+          preload="metadata"
+          className="absolute inset-0 w-full h-full min-w-full min-h-full object-cover"
+        >
+          <source
+            src="https://res.cloudinary.com/diwavsksm/video/upload/f_auto,q_auto/v1741962956/intro_poyq5n.mp4"
+            type="video/mp4"
+          />
+          متصفحك لا يدعم الفيديو.
+        </video>
+      </div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black"></div>
 
       {/* ✅ زرار فتح الكارد */}
@@ -71,7 +76,7 @@ const HeroSection = () => {
         {showCard ? "✖" : "🎵"}
       </button>
 
-      {/* ✅ كارد الصوت المتحرك */}
+      {/* ✅ كارد الصوت */}
       <div
         className={`absolute top-16 left-5 md:top-20 md:left-10 p-4 md:p-6 rounded-xl bg-white/20 backdrop-blur-lg shadow-lg border border-white border-opacity-20 flex flex-col items-center space-y-3 w-44 md:w-56 transition-all duration-500 ease-in-out ${
           showCard
@@ -79,7 +84,6 @@ const HeroSection = () => {
             : "opacity-0 -translate-y-10 pointer-events-none"
         }`}
       >
-        {/* صورة الأغنية */}
         <img
           src="https://img.youtube.com/vi/5mWkn0Xb6KM/0.jpg"
           alt="Song Cover"
@@ -97,17 +101,19 @@ const HeroSection = () => {
           ></div>
         </div>
 
-        {/* الوقت الحالي */}
         <div className="text-xs md:text-sm text-white font-mono">
           {Math.floor(currentSeconds)}s / 60s
         </div>
 
-        {/* ✅ زر الميوت */}
         <button
           onClick={toggleMute}
           className="mt-1 flex items-center justify-center space-x-2 px-3 py-2 md:px-4 md:py-2.5 bg-gray-900 bg-opacity-80 text-white rounded-full shadow-md hover:bg-opacity-90 transition-all"
         >
-          {isMuted ? <FaVolumeMute size={16} /> : <FaVolumeUp size={16} />}
+          {isMuted ? (
+            <FaVolumeMute size={16} style={{ color: "#035ea3" }} /> // تغيير لون الأيقونة
+          ) : (
+            <FaVolumeUp size={16} style={{ color: "#035ea3" }} /> // تغيير لون الأيقونة
+          )}
           <span className="text-xs md:text-sm">
             {isMuted ? "Muted" : "Unmute"}
           </span>
@@ -152,6 +158,7 @@ const StatBox = ({ value, label }) => {
       <animated.div className="text-3xl sm:text-4xl md:text-5xl font-bold text-yellow-400">
         {props.number.to((n) => n.toFixed(0))}
       </animated.div>
+
       <div className="mt-2 text-white text-sm sm:text-base">{label}</div>
     </div>
   );

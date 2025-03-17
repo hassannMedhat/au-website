@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import Cookies from "js-cookie";
 
 export function useIsLoggedIn() {
-  const [loggedIn, setLoggedIn] = useState(!!Cookies.get("token"));
+  const [loggedIn, setLoggedIn] = useState(!!Cookies.get("auth_token"));
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const token = Cookies.get("token");
+      const token = Cookies.get("auth_token");
       setLoggedIn(!!token);
     }, 500); // فحص كل نصف ثانية
 
