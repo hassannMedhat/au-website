@@ -146,7 +146,7 @@ const HeroSection = () => {
         <p className="text-base sm:text-lg md:text-2xl mb-6 md:mb-10">
           Live the Ultimate RP Adventure
         </p>
-        <div className="min-h-screen flex items-center justify-center ">
+        <div className=" flex items-center justify-center ">
           {/* الزر الرئيسي */}
           <button
             onClick={handleButtonClick}
