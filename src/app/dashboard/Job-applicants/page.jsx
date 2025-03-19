@@ -33,7 +33,7 @@ export default function JobApplicants() {
       }
 
       try {
-        const res = await axios.get("http://127.0.0.1:8000/api/job-applications", {
+        const res = await axios.get("http://localhost:8000/api/job-applications", {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (Array.isArray(res.data)) {
@@ -42,7 +42,7 @@ export default function JobApplicants() {
           setError("Unexpected API response format.");
         }
 
-        const userRes = await axios.get("http://127.0.0.1:8000/api/profile", {
+        const userRes = await axios.get("http://localhost:8000/api/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUserRoles(userRes.data.user.roles.map((role) => role.name));
@@ -74,7 +74,7 @@ export default function JobApplicants() {
       try {
         const token = Cookies.get("token");
         const res = await axios.put(
-          `http://127.0.0.1:8000/api/job-applications/${id}/status`,
+          `http://localhost:8000/api/job-applications/${id}/status`,
           { status: newStatus },
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -95,7 +95,7 @@ export default function JobApplicants() {
     if (window.confirm("Are you sure you want to delete this application?")) {
       try {
         const token = Cookies.get("token");
-        await axios.delete(`http://127.0.0.1:8000/api/job-applications/${id}`, {
+        await axios.delete(`http://localhost:8000/api/job-applications/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setApplicants(applicants.filter((app) => app.id !== id));

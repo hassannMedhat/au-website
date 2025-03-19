@@ -35,12 +35,12 @@ export default function UsersManagement() {
 
     const fetchData = async () => {
       try {
-        const usersRes = await axios.get("http://127.0.0.1:8000/api/users", {
+        const usersRes = await axios.get("http://localhost:8000/api/users", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setUsers(usersRes.data || []);
 
-        const rolesRes = await axios.get("http://127.0.0.1:8000/api/role_user", {
+        const rolesRes = await axios.get("http://localhost:8000/api/role_user", {
           headers: { Authorization: `Bearer ${token}` },
         });
         setRoleMappings(rolesRes.data || []);
@@ -62,11 +62,11 @@ export default function UsersManagement() {
   const toggleRole = async (userId, roleId) => {
     try {
       await axios.post(
-        "http://127.0.0.1:8000/api/toggle-role",
+        "http://localhost:8000/api/toggle-role",
         { user_id: userId, role_id: roleId },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      const rolesRes = await axios.get("http://127.0.0.1:8000/api/role_user", {
+      const rolesRes = await axios.get("http://localhost:8000/api/role_user", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setRoleMappings(rolesRes.data || []);

@@ -252,7 +252,7 @@ const StatsTracker = () => {
     const fetchDiscordData = async () => {
       try {
         const { data } = await axios.get(
-          "http://127.0.0.1:8000/api/discord/members"
+          "http://localhost:8000/api/discord/members"
         );
         setDiscordCount(data.member_count);
         setError(null);

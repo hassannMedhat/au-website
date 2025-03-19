@@ -60,7 +60,7 @@ export default function JobsPage() {
     console.log("Token from Cookies:", token);
     if (token) {
       axios
-        .get("http://127.0.0.1:8000/api/profile", {
+        .get("http://localhost:8000/api/profile", {
           headers: { Authorization: `Bearer ${token}` },
           withCredentials: true,
         })
@@ -155,7 +155,7 @@ export default function JobsPage() {
       };
 
       const response = await axios.post(
-        "http://127.0.0.1:8000/api/job-applications",
+        "http://localhost:8000/api/job-applications",
         payload,
         { headers: { Authorization: `Bearer ${token}` } }
       );

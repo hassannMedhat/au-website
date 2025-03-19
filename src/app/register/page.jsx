@@ -28,7 +28,7 @@ export default function RegisterPage() {
     setError("");
     setLoading(true);
     try {
-      const res = await axios.post("http://127.0.0.1:8000/api/register", { name, email, password });
+      const res = await axios.post("http://localhost:8000/api/register", { name, email, password });
       Cookies.set("token", res.data.token, { expires: 7, secure: true, sameSite: "Strict" });
       setIsLoggedIn(true);
       router.push("/");

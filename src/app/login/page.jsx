@@ -16,7 +16,7 @@ export default function LoginPage() {
   }, [router]);
 
   const handleDiscordLogin = () => {
-    window.location.href = "http://127.0.0.1:8000/auth/discord";
+    window.location.href = "http://localhost:8000/auth/discord";
   };
 
   return (
