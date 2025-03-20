@@ -7,6 +7,8 @@ import {
   FiUsers,
 } from "react-icons/fi";
 import { motion } from "framer-motion";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const rulesData = [
   {
@@ -321,6 +323,18 @@ export default function RulesPage() {
   const [expandedTitleIndex, setExpandedTitleIndex] = useState(-1);
   const [selectedTopic, setSelectedTopic] = useState("");
   const contentRef = useRef(null);
+  const showNote = () => {
+    toast.success("Thank you for reading the rules!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
+
 
   const handleTitleClick = (index) => {
     setExpandedTitleIndex(expandedTitleIndex === index ? -1 : index);
@@ -340,7 +354,7 @@ export default function RulesPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-900 to-purple-900 p-4 sm:p-6 lg:p-8">
       <div className="max-w-screen-lg mx-auto">
-        <h1 className="text-5xl font-extrabold mb-10 text-center text-yellow-300 drop-shadow-lg">
+        <h1 className="text-5xl font-extrabold mb-10 text-center text-[#035ea3] drop-shadow-lg">
           📜 Server Rules 📜
         </h1>
 
@@ -413,10 +427,11 @@ export default function RulesPage() {
         <div className="mt-12 text-center">
           <button
             className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-8 rounded-full transform transition-all hover:scale-105 shadow-lg"
-            onClick={() => alert("Thank you for reading the rules!")}
+            onClick={showNote}
           >
             Did you read the rules?
           </button>
+          <ToastContainer />
         </div>
       </div>
     </div>
